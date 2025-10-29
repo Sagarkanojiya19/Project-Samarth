@@ -6,7 +6,6 @@ from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.vectorstores import Chroma
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.embeddings import HuggingFaceEmbeddings
 from config import *
 import logging
@@ -221,7 +220,7 @@ def initialize_qa_system():
         collection = chroma_client.get_collection(name=COLLECTION_NAME)
         embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         vectorstore = Chroma(client=chroma_client, collection_name=COLLECTION_NAME, embedding_function=embeddings)
-        llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash",api_key = GOOGLE_API_KEY, temperature=0)
+        llm = ChatGroq(groq_api_key=GROQ_API_KEY, model_name="llama-3.3-70b-versatile", temperature=0)
         
         prompt_template ="""
 You are an expert assistant for  India's agricultural and climate data, including:
